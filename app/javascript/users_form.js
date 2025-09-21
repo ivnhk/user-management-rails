@@ -34,21 +34,6 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   }
 
-  // Real-time phone validation
-  const phoneField = form.querySelector('input[type="tel"]');
-  if (phoneField) {
-    phoneField.addEventListener('input', function() {
-      const value = this.value;
-      const phoneRegex = /^\+[1-9]\d{1,14}$/;
-      const isValid = !value || phoneRegex.test(value);
-      
-      if (value && !isValid) {
-        this.setCustomValidity('Please enter a valid phone number with country code (e.g., +1234567890)');
-      } else {
-        this.setCustomValidity('');
-      }
-    });
-  }
 
   // Form submission validation
   form.addEventListener('submit', function(e) {

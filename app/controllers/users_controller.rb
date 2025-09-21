@@ -65,26 +65,20 @@ class UsersController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def user_params
-      params.require(:user).permit(:first_name, :last_name, :email, :phone_number, :position)
+      params.require(:user).permit(:first_name, :last_name, :email)
     end
 
     # Sanitize user parameters to prevent XSS and normalize data
     def sanitized_user_params
       sanitized = user_params.dup
-
+      
       # Strip whitespace and normalize names
       sanitized[:first_name] = sanitized[:first_name]&.strip&.titleize
       sanitized[:last_name] = sanitized[:last_name]&.strip&.titleize
-
+      
       # Strip whitespace from email (normalization happens in model)
       sanitized[:email] = sanitized[:email]&.strip
-
-      # Strip whitespace from phone number
-      sanitized[:phone_number] = sanitized[:phone_number]&.strip
-
-      # Strip whitespace from position
-      sanitized[:position] = sanitized[:position]&.strip
-
+      
       sanitized
     end
 end

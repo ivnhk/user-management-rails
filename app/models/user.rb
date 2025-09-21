@@ -13,13 +13,6 @@ class User < ApplicationRecord
             uniqueness: { case_sensitive: false },
             length: { maximum: 64 }
 
-  # Phone validation - valid phone number with country code
-  validates :phone_number,
-            format: { with: /\A\+[1-9]\d{1,14}\z/, message: "must be a valid phone number with country code (e.g., +1234567890)" },
-            allow_blank: true
-
-  # Position validation
-  validates :position, length: { maximum: 100 }
 
   # Normalize email to lowercase before saving
   before_save :normalize_email

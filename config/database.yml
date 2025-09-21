@@ -83,6 +83,7 @@ production:
     <<: *default
     database: user_management_rails_production
     username: user_management_rails
+    url: <%= ENV['DATABASE_URL'] %>
     password: <%= ENV["USER_MANAGEMENT_RAILS_DATABASE_PASSWORD"] %>
   cache:
     <<: *primary_production

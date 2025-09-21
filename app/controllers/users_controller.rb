@@ -21,7 +21,7 @@ class UsersController < ApplicationController
 
   # POST /users or /users.json
   def create
-    @user = User.new(user_params)
+    @user = User.new(sanitized_user_params)
 
     respond_to do |format|
       if @user.save
@@ -37,7 +37,7 @@ class UsersController < ApplicationController
   # PATCH/PUT /users/1 or /users/1.json
   def update
     respond_to do |format|
-      if @user.update(user_params)
+      if @user.update(sanitized_user_params)
         format.html { redirect_to @user, notice: "User was successfully updated.", status: :see_other }
         format.json { render :show, status: :ok, location: @user }
       else
@@ -65,6 +65,26 @@ class UsersController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def user_params
-      params.expect(user: [ :first_name, :last_name, :email, :phone_number, :position ])
+      params.require(:user).permit(:first_name, :last_name, :email, :phone_number, :position)
+    end
+
+    # Sanitize user parameters to prevent XSS and normalize data
+    def sanitized_user_params
+      sanitized = user_params.dup
+
+      # Strip whitespace and normalize names
+      sanitized[:first_name] = sanitized[:first_name]&.strip&.titleize
+      sanitized[:last_name] = sanitized[:last_name]&.strip&.titleize
+
+      # Strip whitespace from email (normalization happens in model)
+      sanitized[:email] = sanitized[:email]&.strip
+
+      # Strip whitespace from phone number
+      sanitized[:phone_number] = sanitized[:phone_number]&.strip
+
+      # Strip whitespace from position
+      sanitized[:position] = sanitized[:position]&.strip
+
+      sanitized
     end
 end

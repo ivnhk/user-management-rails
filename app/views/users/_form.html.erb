@@ -13,27 +13,48 @@
 
   <div class="my-5">
     <%= form.label :first_name %>
-    <%= form.text_field :first_name, class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": user.errors[:first_name].none?, "border-red-400 focus:outline-red-600": user.errors[:first_name].any?}] %>
+    <%= form.text_field :first_name, 
+        class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": user.errors[:first_name].none?, "border-red-400 focus:outline-red-600": user.errors[:first_name].any?}],
+        required: true,
+        maxlength: 64,
+        pattern: "[a-zA-Z\\s]+",
+        title: "First name can only contain letters and spaces (max 64 characters)" %>
   </div>
 
   <div class="my-5">
     <%= form.label :last_name %>
-    <%= form.text_field :last_name, class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": user.errors[:last_name].none?, "border-red-400 focus:outline-red-600": user.errors[:last_name].any?}] %>
+    <%= form.text_field :last_name, 
+        class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": user.errors[:last_name].none?, "border-red-400 focus:outline-red-600": user.errors[:last_name].any?}],
+        required: true,
+        maxlength: 64,
+        pattern: "[a-zA-Z\\s]+",
+        title: "Last name can only contain letters and spaces (max 64 characters)" %>
   </div>
 
   <div class="my-5">
     <%= form.label :email %>
-    <%= form.text_field :email, class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": user.errors[:email].none?, "border-red-400 focus:outline-red-600": user.errors[:email].any?}] %>
+    <%= form.email_field :email, 
+        class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": user.errors[:email].none?, "border-red-400 focus:outline-red-600": user.errors[:email].any?}],
+        required: true,
+        maxlength: 64,
+        pattern: "[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}",
+        title: "Please enter a valid email address with proper domain (e.g., user@example.com)" %>
   </div>
 
   <div class="my-5">
     <%= form.label :phone_number %>
-    <%= form.text_field :phone_number, class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": user.errors[:phone_number].none?, "border-red-400 focus:outline-red-600": user.errors[:phone_number].any?}] %>
+    <%= form.telephone_field :phone_number, 
+        class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": user.errors[:phone_number].none?, "border-red-400 focus:outline-red-600": user.errors[:phone_number].any?}],
+        pattern: "\\+[1-9]\\d{1,14}",
+        title: "Please enter a valid phone number with country code (e.g., +1234567890)" %>
   </div>
 
   <div class="my-5">
     <%= form.label :position %>
-    <%= form.text_field :position, class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": user.errors[:position].none?, "border-red-400 focus:outline-red-600": user.errors[:position].any?}] %>
+    <%= form.text_field :position, 
+        class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": user.errors[:position].none?, "border-red-400 focus:outline-red-600": user.errors[:position].any?}],
+        maxlength: 100,
+        title: "Position (max 100 characters)" %>
   </div>
 
   <div class="inline">

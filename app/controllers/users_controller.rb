@@ -72,13 +72,27 @@ class UsersController < ApplicationController
     def sanitized_user_params
       sanitized = user_params.dup
       
-      # Strip whitespace and normalize names
-      sanitized[:first_name] = sanitized[:first_name]&.strip&.titleize
-      sanitized[:last_name] = sanitized[:last_name]&.strip&.titleize
+      # Strip whitespace and normalize names, remove dangerous characters
+      sanitized[:first_name] = sanitize_name_field(sanitized[:first_name])
+      sanitized[:last_name] = sanitize_name_field(sanitized[:last_name])
       
       # Strip whitespace from email (normalization happens in model)
       sanitized[:email] = sanitized[:email]&.strip
       
       sanitized
+    end
+    
+    # Sanitize name fields to prevent SQL injection and XSS
+    def sanitize_name_field(field)
+      return nil if field.blank?
+      
+      # Remove any non-alphabetic characters except spaces, hyphens, and apostrophes
+      sanitized = field.strip.gsub(/[^a-zA-Z\s\-']/, '')
+      
+      # Remove multiple consecutive spaces
+      sanitized = sanitized.gsub(/\s+/, ' ')
+      
+      # Titleize the name
+      sanitized.titleize
     end
 end
